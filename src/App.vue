@@ -3,7 +3,7 @@
     <div class="background"></div>
 
     <main class="content">
-      <slot />
+      <router-view />
     </main>
   </div>
 </template>
