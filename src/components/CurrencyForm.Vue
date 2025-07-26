@@ -29,25 +29,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { CURRENCIES, type Currency, type ConvertPayload } from '@/types/currency';
 
 export default Vue.extend({
     name: 'CurrencyForm',
-    
     data() {
         return {
             amount: 1,
-            from: 'USD',
-            to: 'BRL',
-            currencies: ['USD', 'EUR', 'BRL', 'JPY', 'GBP'],
+            from: 'USD' as Currency,
+            to: 'BRL' as Currency,
+            currencies: CURRENCIES as readonly Currency[],
         };
     },
     methods: {
         handleSubmit() {
-            this.$emit('convert', {
+            const payload: ConvertPayload = {
                 amount: this.amount,
                 from: this.from,
                 to: this.to,
-            });
+            };
+            this.$emit('convert', payload);
         },
     },
 });
@@ -86,7 +87,7 @@ export default Vue.extend({
     }
 
     .convert-button {
-        @include fancy-button($secondary);
+        @include fancy-button($secondary, #fff);
         font-weight: bold;
     }
 }

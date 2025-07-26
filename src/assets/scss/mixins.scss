@@ -21,7 +21,7 @@
 
 // Button hover animation (fills from center)
 @mixin fancy-button($bg: $primary, $color: $text) {
-    background-color: transparent;
+    background-color: $primary;
     color: $color;
     border: 2px solid $bg;
     padding: $spacing-sm $spacing-md;
@@ -53,7 +53,7 @@
     }
 
     &:hover {
-        color: $text;
+        background-color: $text;
     }
 }
 
