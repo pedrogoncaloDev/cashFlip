@@ -1,0 +1,38 @@
+# Node
+node_modules/
+dist/
+.cache/
+.temp/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs e editores
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Testes e relatórios
+coverage/
+jest-cache/
+jest-config.json
+*.log
+
+# Variáveis locais
+.env
+.env.*
+
+# Deploys / CI
+*.local
+.github/workflows/*.log
+
+# Arquivos gerados pelo Vue CLI
+public/js/*.js
+public/css/*.css
+public/js/*.map
+public/css/*.map
+
+# 🔍 TS
+*.tsbuildinfo
