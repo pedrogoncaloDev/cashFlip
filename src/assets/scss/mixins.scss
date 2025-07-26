@@ -23,7 +23,7 @@
 @mixin fancy-button($bg: $primary, $color: $text) {
     background-color: $primary;
     color: $color;
-    border: 2px solid $bg;
+    border: none;
     padding: $spacing-sm $spacing-md;
     border-radius: 5px;
     cursor: pointer;
