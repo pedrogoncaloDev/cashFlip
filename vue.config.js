@@ -4,7 +4,7 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       sass: {
-        implementation: require('sass'), // Usa o Dart Sass
+        implementation: require('sass')
       },
     },
   },
