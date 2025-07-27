@@ -13,7 +13,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["webpack-env"],
+    "types": ["webpack-env", "jest"],
     "lib": ["esnext", "dom"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
