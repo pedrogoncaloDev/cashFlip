@@ -2,17 +2,17 @@
     <section class="history">
         <b-card class="mb-2">
             <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
-                <h2 class="h5 mb-2 mb-md-0">History</h2>
+                <h2 class="h5 mb-2 mb-md-0">Histórico de Conversões</h2>
                 <div class="d-flex gap-2">
-                    <b-button size="sm" variant="outline-danger" @click="$emit('clear')">Clear</b-button>
+                    <b-button size="sm" variant="outline-danger" @click="$emit('clear')">Limpar Histórico</b-button>
                 </div>
             </div>
 
             <b-input-group size="sm" class="mt-3">
-                <b-form-input v-model="filter" placeholder="Filter by currency… (e.g. USD, BRL)"></b-form-input>
+                <b-form-input v-model="filter" placeholder="Filtrar"></b-form-input>
             </b-input-group>
 
-            <b-table :items="items" :fields="fields" :filter="filter" :filter-included-fields="['from', 'to']"
+            <b-table :items="items" :fields="fields" :filter="filter"
                 :per-page="perPage" :current-page="currentPage" responsive striped hover small stacked="md"
                 :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="mt-3">
                 <template #cell(timestamp)="{ item }">
@@ -36,7 +36,7 @@
                 </template>
 
                 <template #cell(actions)="{ item }">
-                    <b-button size="sm" variant="outline-danger" @click="$emit('remove', item.id)">Remove</b-button>
+                    <b-button size="sm" variant="outline-danger" @click="$emit('remove', item.id)">Remover</b-button>
                 </template>
             </b-table>
 
@@ -48,12 +48,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import type { HistoryItem } from '@/types/history';
-
-export interface HistoryItem extends ConvertResult {
-    id: string;
-    timestamp: number;
-}
+import type { HistoryItem, TableField } from '@/types/history';
+import { formatMoney, formatDate } from '@/utils/format';
 
 export default Vue.extend({
     name: 'HistoryList',
@@ -74,13 +70,13 @@ export default Vue.extend({
             sortBy: 'timestamp' as string,
             sortDesc: true as boolean,
             fields: [
-                { key: 'timestamp', label: 'Date', sortable: true },
-                { key: 'pair', label: 'Pair', sortable: true, class: 'text-nowrap' },
-                { key: 'amount', label: 'Amount', sortable: true, tdClass: 'text-right' },
-                { key: 'converted', label: 'Converted', sortable: true, tdClass: 'text-right' },
-                { key: 'rate', label: 'Rate', sortable: true, tdClass: 'text-right' },
+                { key: 'timestamp', label: 'Data/Hora', sortable: true },
+                { key: 'pair', label: 'Par de Moedas', sortable: true, class: 'text-nowrap' },
+                { key: 'amount', label: 'Valor Original', sortable: true, tdClass: 'text-right' },
+                { key: 'converted', label: 'Valor Convertido', sortable: true, tdClass: 'text-right' },
+                { key: 'rate', label: 'Cotação', sortable: true, tdClass: 'text-right' },
                 { key: 'actions', label: '', class: 'text-right' },
-            ] as any[],
+            ] as TableField[],
         };
     },
     computed: {
@@ -89,28 +85,8 @@ export default Vue.extend({
         },
     },
     methods: {
-        formatMoney(amount: number, code: Currency, locale = 'pt-BR'): string {
-            try {
-                return new Intl.NumberFormat(locale, {
-                    style: 'currency',
-                    currency: code,
-                    maximumFractionDigits: 2,
-                }).format(amount);
-            } catch {
-                return `${code} ${amount.toFixed(2)}`;
-            }
-        },
-        formatDate(ts: number): string {
-            try {
-                const d = new Date(ts);
-                return new Intl.DateTimeFormat('pt-BR', {
-                    dateStyle: 'short',
-                    timeStyle: 'short',
-                }).format(d);
-            } catch {
-                return String(ts);
-            }
-        },
+        formatMoney,
+        formatDate,
     },
 });
 </script>
@@ -118,5 +94,9 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .history :deep(.table) {
     margin-bottom: 0;
+}
+
+.history :deep(.sr-only) {
+    display: none !important;
 }
 </style>

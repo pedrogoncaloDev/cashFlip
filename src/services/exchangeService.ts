@@ -1,9 +1,9 @@
-import { ConvertPayload, ConvertResult, Currency } from '@/types/currency';
+import { ConvertPayload, ConvertResult, Currency, ExchangeApiResponse } from '@/types/currency';
 
 type CacheEntry = { value: number; expires: number };
 const cache = new Map<string, CacheEntry>();
 const TTL_MS = 10 * 60 * 1000;
-const BASE_URL = process.env.VUE_APP_EXCHANGE_API_URL?.trim() || 'https://api.exchangerate.host/convert';
+const BASE_URL = process.env.VUE_APP_EXCHANGE_API_URL?.trim();
 
 // PRIVATE
 // Builds the cache key "<from>-><to>".
@@ -27,14 +27,19 @@ export async function fetchRate(from: Currency, to: Currency): Promise<number> {
 
     if (hit && hit.expires > now) return hit.value;
 
-    const url = `${BASE_URL}?base=${encodeURIComponent(from)}&symbols=${encodeURIComponent(to)}`;
+    const url = `${BASE_URL}/${encodeURIComponent(to)}`;
     const res = await fetch(url);
     if (!res.ok) {
         throw new ExchangeError(`HTTP ${res.status} (${res.statusText}) while fetching ${from}->${to}`);
     }
 
-    const data: any = await res.json();
-    const rate = data?.rates?.[to];
+    const data: ExchangeApiResponse = await res.json();
+
+    if (data.result !== "success") {
+        throw new ExchangeError(`API result was not success: ${data.result}`);
+    }
+
+    const rate = data?.conversion_rates?.[to];
     if (typeof rate !== 'number' || !isFinite(rate)) {
         throw new ExchangeError(`Invalid rate payload for ${from}->${to}`);
     }
