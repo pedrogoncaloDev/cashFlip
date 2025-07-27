@@ -19,7 +19,6 @@
                 </transition>
             </b-col>
 
-            <!-- Em telas grandes, mostra ao lado. Em pequenas, vai para baixo. -->
             <b-col cols="12" md="8">
                 <HistoryList class="mt-2 mt-md-0" :items="history" :perPage="5" @remove="removeHistory"
                     @clear="clearHistory" />
@@ -48,8 +47,8 @@ export default Vue.extend({
         };
     },
     created() {
-        // (Opcional) Restaura histórico do localStorage:
         const raw = localStorage.getItem('fx_history');
+
         if (raw) {
             try { this.history = JSON.parse(raw); } catch { /* ignore */ }
         }
@@ -109,7 +108,7 @@ export default Vue.extend({
 .home-page {
     text-align: center;
     color: $text;
-    padding: $spacing-lg $spacing-md;
+    padding: $spacing-lg 0;
     min-height: 100vh;
 
     .title {
