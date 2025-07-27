@@ -20,6 +20,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "@/assets/scss/variables.scss";
+@import "@/assets/scss/mixins.scss";
 
 * {
   padding: 0;
@@ -38,11 +39,7 @@ export default Vue.extend({
   position: relative;
   z-index: 1;
   padding: 0 $spacing-md;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  min-height: 100vh;
+  @include flex-center(flex, center, start, column);
   color: $text;
   font-size: $font-size-base;
 }

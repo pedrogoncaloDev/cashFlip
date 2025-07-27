@@ -72,6 +72,13 @@
     animation: fadeIn $duration ease-out forwards;
 }
 
+@mixin flex-center($display: flex, $align: center, $justify: center, $direction: row) {
+    display: $display;
+    align-items: $align;
+    justify-content: $justify;
+    flex-direction: $direction;
+}
+
 @keyframes fadeIn {
     to {
         opacity: 1;

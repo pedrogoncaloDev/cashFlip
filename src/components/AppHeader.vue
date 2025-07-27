@@ -23,8 +23,8 @@ export default Vue.extend({
     box-shadow: 0 4px 18px 0 rgba(30, 60, 100, 0.22), 0 1.5px 4px 0 rgba(60, 90, 140, 0.09);
 
     .logo-img {
-        margin-left: 50px;
-        max-height: 40px;
+        margin-left: $spacing-lg;
+        max-height: $font-size-logo;
         width: auto;
     }
 
