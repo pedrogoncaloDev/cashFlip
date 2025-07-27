@@ -6,13 +6,11 @@ const TTL_MS = 10 * 60 * 1000;
 const BASE_URL = process.env.VUE_APP_EXCHANGE_API_URL?.trim();
 
 // PRIVATE
-// Builds the cache key "<from>-><to>".
 function __key(from: Currency, to: Currency): string {
     return `${from}->${to}`;
 }
 
 // PUBLIC
-// Domain error for exchange failures.
 export class ExchangeError extends Error {
     constructor(message: string) {
         super(message);
