@@ -109,7 +109,6 @@ export default Vue.extend({
     text-align: center;
     color: $text;
     padding: $spacing-lg 0;
-    min-height: 100vh;
 
     .title {
         font-size: $font-size-lg;
