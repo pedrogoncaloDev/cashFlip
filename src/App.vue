@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <div class="background"></div>
+    <AppHeader />
 
     <main class="content">
       <router-view />
@@ -10,9 +10,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import AppHeader from '@/components/AppHeader.vue';
 
 export default Vue.extend({
   name: 'App',
+  components: { AppHeader },
 });
 </script>
 
@@ -30,14 +32,6 @@ export default Vue.extend({
   min-height: 100vh;
   overflow: hidden;
   font-family: $font-base;
-}
-
-.background {
-  position: absolute;
-  inset: 0;
-  background: $background;
-  background-size: 400% 400%;
-  z-index: 0;
 }
 
 .content {
