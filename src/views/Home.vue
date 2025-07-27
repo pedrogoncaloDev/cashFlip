@@ -14,7 +14,7 @@
                             =
                             <strong>{{ formatMoney(result.converted, result.to) }}</strong>
                         </div>
-                        <small class="rate">rate: {{ result.rate.toFixed(4) }}</small>
+                        <small class="rate">Cotação: {{ result.rate.toFixed(4) }}</small>
                     </div>
                 </transition>
             </b-col>
@@ -34,6 +34,7 @@ import HistoryList from '@/components/HistoryList.vue';
 import type { HistoryItem } from '@/types/history';
 import { convert } from '@/services/exchangeService';
 import type { ConvertPayload, ConvertResult, Currency } from '@/types/currency';
+import { formatMoney } from '@/utils/format';
 
 export default Vue.extend({
     name: 'Home',
@@ -48,9 +49,20 @@ export default Vue.extend({
     },
     created() {
         const raw = localStorage.getItem('fx_history');
+        if (!raw) return;
 
-        if (raw) {
-            try { this.history = JSON.parse(raw); } catch { /* ignore */ }
+        try {
+            const parsed = JSON.parse(raw);
+
+            if (Array.isArray(parsed) && parsed.every(item => item && typeof item.id === 'string')) {
+                this.history = parsed;
+            } else {
+                console.warn('Invalid fx_history found in localStorage, clearing it.');
+                localStorage.removeItem('fx_history');
+            }
+        } catch (err) {
+            console.warn('Error parsing fx_history from localStorage:', err);
+            localStorage.removeItem('fx_history');
         }
     },
     watch: {
@@ -67,7 +79,7 @@ export default Vue.extend({
             try {
                 const r = await convert(payload);
                 this.result = r;
-                // push no histórico
+
                 const item: HistoryItem = {
                     id: `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`,
                     timestamp: Date.now(),
@@ -80,23 +92,13 @@ export default Vue.extend({
                 this.loading = false;
             }
         },
-        formatMoney(amount: number, code: Currency, locale = 'pt-BR'): string {
-            try {
-                return new Intl.NumberFormat(locale, {
-                    style: 'currency',
-                    currency: code,
-                    maximumFractionDigits: 2,
-                }).format(amount);
-            } catch {
-                return `${code} ${amount.toFixed(2)}`;
-            }
-        },
         removeHistory(id: string) {
             this.history = this.history.filter(h => h.id !== id);
         },
         clearHistory() {
             this.history = [];
         },
+        formatMoney,
     },
 });
 </script>

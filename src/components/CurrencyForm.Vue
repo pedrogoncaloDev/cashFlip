@@ -1,22 +1,22 @@
 <template>
     <b-form class="currency-form" @submit.prevent="handleSubmit">
-        <h1 class="title">Currency Converter</h1>
+        <h1 class="title">Conversor de moeda</h1>
         
-        <b-form-group label="Amount" label-for="amount">
-            <b-form-input id="amount" v-model.number="amount" type="number" placeholder="Enter amount" required
+        <b-form-group label="Valor" label-for="amount">
+            <b-form-input id="amount" v-model.number="amount" type="number" placeholder="Digite o valor" required
                 min="0" />
         </b-form-group>
 
-        <b-form-group label="From" label-for="from">
+        <b-form-group label="De" label-for="from">
             <b-form-select id="from" v-model="from" :options="currencies" required />
         </b-form-group>
 
-        <b-form-group label="To" label-for="to">
+        <b-form-group label="Para" label-for="to">
             <b-form-select id="to" v-model="to" :options="currencies" required />
         </b-form-group>
 
         <b-button type="submit" variant="primary" class="convert-button">
-            Convert
+            Converter
         </b-button>
     </b-form>
 </template>
