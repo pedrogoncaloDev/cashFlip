@@ -1,30 +1,24 @@
 <template>
-    <form class="currency-form" @submit.prevent="handleSubmit">
-        <div class="form-group">
-            <label for="amount">Amount</label>
-            <input v-model.number="amount" type="number" id="amount" placeholder="Enter amount" required />
-        </div>
+    <b-form class="currency-form" @submit.prevent="handleSubmit">
+        <h1 class="title">Currency Converter</h1>
+        
+        <b-form-group label="Amount" label-for="amount">
+            <b-form-input id="amount" v-model.number="amount" type="number" placeholder="Enter amount" required
+                min="0" />
+        </b-form-group>
 
-        <div class="form-group">
-            <label for="from">From</label>
-            <select v-model="from" id="from" required>
-                <option v-for="currency in currencies" :key="currency" :value="currency">
-                    {{ currency }}
-                </option>
-            </select>
-        </div>
+        <b-form-group label="From" label-for="from">
+            <b-form-select id="from" v-model="from" :options="currencies" required />
+        </b-form-group>
 
-        <div class="form-group">
-            <label for="to">To</label>
-            <select v-model="to" id="to" required>
-                <option v-for="currency in currencies" :key="currency" :value="currency">
-                    {{ currency }}
-                </option>
-            </select>
-        </div>
+        <b-form-group label="To" label-for="to">
+            <b-form-select id="to" v-model="to" :options="currencies" required />
+        </b-form-group>
 
-        <button type="submit" class="convert-button">Convert</button>
-    </form>
+        <b-button type="submit" variant="primary" class="convert-button">
+            Convert
+        </b-button>
+    </b-form>
 </template>
 
 <script lang="ts">
@@ -66,25 +60,6 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-
-        label {
-            margin-bottom: $spacing-xs;
-            font-weight: 600;
-        }
-
-        input,
-        select {
-            padding: $spacing-sm;
-            border: none;
-            border-radius: 4px;
-            font-size: $font-size-base;
-            color: $text-dark;
-        }
-    }
 
     .convert-button {
         @include fancy-button($secondary, #fff);

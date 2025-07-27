@@ -1,24 +1,30 @@
 <template>
-    <section class="home-page">
-        <h1 class="title">Currency Converter</h1>
+    <section class="home-page container">
+        <b-row class="justify-content-center flex-md-nowrap">
+            <b-col cols="12" md="4" class="mb-4 mb-md-0">
+                <CurrencyForm @convert="onConvert" />
 
-        <CurrencyForm @convert="onConvert" />
+                <p v-if="loading" class="loading" aria-live="polite">Converting…</p>
+                <p v-if="error" class="error" role="alert">{{ error }}</p>
 
-        <p v-if="loading" class="loading" aria-live="polite">Converting…</p>
-        <p v-if="error" class="error" role="alert">{{ error }}</p>
+                <transition name="fade-up">
+                    <div v-if="result" class="result" key="result">
+                        <div class="line">
+                            {{ formatMoney(result.amount, result.from) }}
+                            =
+                            <strong>{{ formatMoney(result.converted, result.to) }}</strong>
+                        </div>
+                        <small class="rate">rate: {{ result.rate.toFixed(4) }}</small>
+                    </div>
+                </transition>
+            </b-col>
 
-        <transition name="fade-up">
-            <div v-if="result" class="result" key="result">
-                <div class="line">
-                    {{ formatMoney(result.amount, result.from) }}
-                    =
-                    <strong>{{ formatMoney(result.converted, result.to) }}</strong>
-                </div>
-                <small class="rate">rate: {{ result.rate.toFixed(4) }}</small>
-            </div>
-        </transition>
-
-        <HistoryList class="mt-4" :items="history" :perPage="5" @remove="removeHistory" @clear="clearHistory" />
+            <!-- Em telas grandes, mostra ao lado. Em pequenas, vai para baixo. -->
+            <b-col cols="12" md="8">
+                <HistoryList class="mt-2 mt-md-0" :items="history" :perPage="5" @remove="removeHistory"
+                    @clear="clearHistory" />
+            </b-col>
+        </b-row>
     </section>
 </template>
 
@@ -95,3 +101,47 @@ export default Vue.extend({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
+@import "@/assets/scss/mixins.scss";
+
+.home-page {
+    text-align: center;
+    color: $text;
+    padding: $spacing-lg $spacing-md;
+    min-height: 100vh;
+
+    .title {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-lg;
+        font-weight: 700;
+    }
+
+    .loading {
+        margin-top: $spacing-md;
+        opacity: $opacity-light;
+    }
+
+    .error {
+        margin-top: $spacing-md;
+        color: #ffb4b4;
+        font-weight: 600;
+    }
+
+    .result {
+        margin: $spacing-lg auto 0;
+        max-width: 520px;
+        @include card-style;
+
+        .line {
+            font-size: $font-size-lg;
+            margin-bottom: $spacing-sm;
+        }
+
+        .rate {
+            opacity: 0.8;
+        }
+    }
+}
+</style>
