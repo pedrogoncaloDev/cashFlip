@@ -54,7 +54,6 @@ export default Vue.extend({
 
 .currency-form {
     width: 100%;
-    max-width: 400px;
     padding: $spacing-md;
     @include card-style;
     display: flex;
