@@ -7,7 +7,7 @@ const BASE_URL = process.env.VUE_APP_EXCHANGE_API_URL?.trim();
 
 // PRIVATE
 // Builds the cache key "<from>-><to>".
-function key(from: Currency, to: Currency): string {
+function __key(from: Currency, to: Currency): string {
     return `${from}->${to}`;
 }
 
@@ -21,7 +21,7 @@ export class ExchangeError extends Error {
 }
 
 export async function fetchRate(from: Currency, to: Currency): Promise<number> {
-    const localKey = key(from, to);
+    const localKey = __key(from, to);
     const now = Date.now();
     const hit = cache.get(localKey);
 
@@ -55,6 +55,6 @@ export async function convert({ amount, from, to }: ConvertPayload): Promise<Con
     return { amount, from, to, rate, converted: amount * rate };
 }
 
-export function __clearCache() {
+export function clearCache() {
     cache.clear();
 }
