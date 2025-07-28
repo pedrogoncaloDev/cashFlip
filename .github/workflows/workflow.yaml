@@ -1,19 +1,40 @@
 name: Continuous Integration
-on: [pull_request, push]
+
+on: [push, pull_request]
+
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: '20.x'
+          cache: 'npm'
+
+      # Debuga se o arquivo está versionado e se o import em Home.vue bate
+      - name: Debug workspace
+        run: |
+          echo "== git ls-files CurrencyForm.vue =="
+          git ls-files | grep -i 'CurrencyForm.vue' || true
+          echo "== ls src/components =="
+          ls -la src/components || true
+          echo "== Home.vue (import lines) =="
+          sed -n '1,120p' src/views/Home.vue || true
+
+      # Inspeciona os aliases do webpack do Vue CLI (confirma @ -> src)
+      - name: Inspect webpack aliases
+        run: |
+          npx vue-cli-service inspect --mode production > webpack.inspect.js
+          echo "== Alias @ encontrado? =="
+          grep -n "'@':" webpack.inspect.js || true
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
