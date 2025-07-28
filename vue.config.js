@@ -1,3 +1,5 @@
+// Comentário para testar o CI
+
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
