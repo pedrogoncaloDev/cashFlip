@@ -42,13 +42,13 @@ Pontos que contratam:
     ```bash
     npm run build
 
-6. Testes
+6. **Testes**
     ```bash
     npm run test
 
 ## 🧩 Tecnologias & Decisões
 - Vue 2.7 + TS: SFCs com lang="ts", tipagem do domínio (sem string solta pra moeda).
-- BootstrapVue 2: <b-form>, <b-form-input>, <b-form-select>, <b-table>, <b-pagination>.
+- BootstrapVue 2: `<b-form>`, `<b-form-input>`, `<b-form-select>`, `<b-table>`, `<b-pagination>`.
 - SCSS: variables.scss e mixins.scss para consistência visual e performance.
 - Service (exchangeService.ts):
     - fetchRate(from, to) com cache em memória (TTL 10 min).
@@ -62,8 +62,7 @@ Pontos que contratam:
 
 ## 🧪 Testes
 Stack Jest 29 + @vue/vue2-jest 29 + @vue/test-utils 1.x + ts-jest 29.
-
-    - Service: sucesso, erro HTTP, payload inválido, cache, amount negativo.
-    - Utils: formatadores com Intl e fallbacks.
-    - Componentes:
-        - CurrencyForm.vue: v-model, required/min, emissão de convert com payload correto.
+- Service: sucesso, erro HTTP, payload inválido, cache, amount negativo.
+- Utils: formatadores com Intl e fallbacks.
+- Componentes:
+    - CurrencyForm.vue: v-model, required/min, emissão de convert com payload correto.
