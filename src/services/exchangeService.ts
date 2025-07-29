@@ -25,7 +25,7 @@ export async function fetchRate(from: Currency, to: Currency): Promise<number> {
 
     if (hit && hit.expires > now) return hit.value;
 
-    const url = `${BASE_URL}/${encodeURIComponent(to)}`;
+    const url = `${BASE_URL}/${encodeURIComponent(from)}`;
     const res = await fetch(url);
     if (!res.ok) {
         throw new ExchangeError(`HTTP ${res.status} (${res.statusText}) while fetching ${from}->${to}`);
