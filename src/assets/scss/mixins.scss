@@ -57,6 +57,12 @@
     }
 }
 
+@mixin fancy-select{
+    width: 100%;
+    padding: $spacing-sm;
+    border: $border-width $border-type $border-color;
+}
+
 // Card layout with shadow
 @mixin card-style {
     background: rgba($background, 0.95);

@@ -64,5 +64,9 @@ export default Vue.extend({
         @include fancy-button($secondary, #fff);
         font-weight: bold;
     }
+
+    #from, #to{
+        @include fancy-select;
+    }
 }
 </style>
