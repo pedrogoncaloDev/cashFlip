@@ -54,6 +54,8 @@ jobs:
 
       # 4) Build
       - name: Build project
+        env:
+          VUE_APP_EXCHANGE_API_URL: ${{ secrets.PUBLIC_API_BASE }}
         run: |
           npm run build
           # SPA fallback para history mode do Vue Router
