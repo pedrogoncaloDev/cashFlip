@@ -1,11 +1,16 @@
 <template>
     <b-navbar type="light" variant="light" class="app-header">
-        <b-navbar-brand href="/">
-            <img src="@/assets/logo.png" alt="Logo" class="logo-img d-inline-block align-middle mr-2" height="40" />
-            <span class="app-name">
+        <router-link :to="{ name: 'home' }" class="navbar-brand d-flex align-items-center">
+            <img
+                :src="require('@/assets/logo.png')"
+                alt="Logo"
+                class="logo-img d-inline-block align-middle mr-2"
+                height="40"
+            />
+                <span class="app-name">
                 <span class="cash">Cash</span><span class="flip">Flip</span>
             </span>
-        </b-navbar-brand>
+        </router-link>
     </b-navbar>
 </template>
 
